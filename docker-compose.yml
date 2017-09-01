@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+
+    tracker-db:
+        image: tracker-db
+        environment:
+            MYSQL_ROOT_PASSWORD: tracker
+            MYSQL_DATABASE: tracker
+            MYSQL_USER: tracker
+            MYSQL_PASSWORD: tracker
+        volumes:
+            - db-data:/var/lib/mysql
+
+    tracker-site:
+        image: tracker-site
+        ports:
+            - "8089:80"
+        environment:
+            db_hostname: tracker-db
+            db_database: tracker
+            db_username: tracker
+            db_password: tracker
+            site_url: "http://172.25.24.55:8089"
+
+volumes:
+  db-data:
